@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 
 
 import java.io.File;
@@ -28,7 +29,14 @@ public class Main extends Application {
         Media media = new Media(new File(music).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(0.15);
-        mediaPlayer.setAutoPlay(true);
+        loop();
+    }
+    public void loop(){
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(()->{
+            mediaPlayer.seek(Duration.ZERO);
+            mediaPlayer.play();
+        });
     }
 
     public static void main(String[] args) {
