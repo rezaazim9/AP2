@@ -1,5 +1,7 @@
 package com.example.ap2;
 
+import javafx.scene.paint.Color;
+
 import java.io.IOException;
 
 public class GameMenu {
@@ -16,17 +18,18 @@ public class GameMenu {
 
     }
     public void blue(){
+        Game.ball_color= Color.BLUE;
     }
     public void red(){
-
+        Game.ball_color= Color.RED;
     }
     public void green(){
-
+        Game.ball_color= Color.GREEN;
     }
     public void yellow(){
-
+        Game.ball_color= Color.YELLOW;
     }
-    public void start() throws IOException {
+    public void start()  {
         SceneSwitcher.game();
     }
 }

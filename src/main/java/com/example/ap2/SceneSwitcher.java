@@ -2,7 +2,6 @@ package com.example.ap2;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-
 import java.io.IOException;
 
 public class SceneSwitcher {
@@ -21,11 +20,7 @@ public class SceneSwitcher {
         Scene scene=new Scene(fxmlLoader.load());
         Main.stage.setScene(scene);
     }
-    public static void game() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Game.fxml"));
-        Scene scene=new Scene(fxmlLoader.load());
-        Main.stage.setScene(scene);
+    public static void game() {
+       Game.game();
     }
-
-
 }
