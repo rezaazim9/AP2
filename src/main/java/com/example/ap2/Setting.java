@@ -6,9 +6,10 @@ import java.io.IOException;
 
 public class Setting {
     public void musicOff(){
-
+            Main.mediaPlayer.pause();
     }
     public void musicOn(){
+            Main.mediaPlayer.play();
 
     }
     public void aimOn(){
