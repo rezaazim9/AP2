@@ -1,7 +1,5 @@
 package com.example.ap2;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import java.io.IOException;
 
 public class Setting {

@@ -16,4 +16,16 @@ public class SceneSwitcher {
         Scene scene=new Scene(fxmlLoader.load());
         Main.stage.setScene(scene);
     }
+    public static void gameMenu() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GameMenu.fxml"));
+        Scene scene=new Scene(fxmlLoader.load());
+        Main.stage.setScene(scene);
+    }
+    public static void game() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Game.fxml"));
+        Scene scene=new Scene(fxmlLoader.load());
+        Main.stage.setScene(scene);
+    }
+
+
 }

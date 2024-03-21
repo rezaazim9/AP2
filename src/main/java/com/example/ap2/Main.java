@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     static Stage stage;
+    static MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -23,13 +24,13 @@ public class Main extends Application {
         stage.setTitle("Bricks Breaker +");
         stage.setScene(scene);
         stage.show();
-String music= "C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\Music2.mp3";
-        Media media=new Media(new File(music).toURI().toString());
-        mediaPlayer=new MediaPlayer(media);
+        String music = "C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\Music2.mp3";
+        Media media = new Media(new File(music).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(0.15);
         mediaPlayer.setAutoPlay(true);
     }
-    static MediaPlayer mediaPlayer;
+
     public static void main(String[] args) {
 
         launch();
