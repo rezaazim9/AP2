@@ -1,18 +1,27 @@
 package com.example.ap2;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
     static Color ball_color=Color.RED;
+    Button mainMenu=new Button();
+    Button restart=new Button();
+    Button back=new Button();
     static List<Circle> balls=new ArrayList<>();
 
-    public static void game(){
+    public void game(){
         Line line=new Line(0,550,600,550);
         line.setStrokeWidth(5);
         Group root=new Group();
@@ -27,7 +36,56 @@ public class Game {
         for (Circle i:balls){
             root.getChildren().add(i);
         }
+        mainMenu.setLayoutX(20);
+        mainMenu.setLayoutY(680);
+        mainMenu.setPrefWidth(150);
+        mainMenu.setPrefHeight(40);
+        mainMenu.setText("Main Menu");
+        mainMenu.setFont(new Font(18));
+        mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    SceneSwitcher.mainMenu();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        restart.setLayoutX(20);
+        restart.setLayoutY(630);
+       restart.setPrefWidth(150);
+        restart.setPrefHeight(40);
+      restart.setText("Restart");
+        restart.setFont(new Font(18));
+        restart.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                SceneSwitcher.game();
+            }
+        });
+       back.setLayoutX(20);
+       back.setLayoutY(580);
+        back.setPrefWidth(150);
+       back.setPrefHeight(40);
+       back.setText("Back");
+       back.setFont(new Font(18));
+       back.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+           @Override
+           public void handle(MouseEvent mouseEvent) {
+               try {
+                   SceneSwitcher.gameMenu();
+               } catch (IOException e) {
+                   throw new RuntimeException(e);
+               }
+           }
+       });
+       root.getChildren().add(back);
+        root.getChildren().add(restart);
+        root.getChildren().add(mainMenu);
         Scene scene=new Scene(root,600,750);
         Main.stage.setScene(scene);
     }
+
+
 }

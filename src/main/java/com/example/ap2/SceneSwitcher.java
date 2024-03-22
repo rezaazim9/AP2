@@ -21,6 +21,6 @@ public class SceneSwitcher {
         Main.stage.setScene(scene);
     }
     public static void game() {
-       Game.game();
+       new Game().game();
     }
 }
