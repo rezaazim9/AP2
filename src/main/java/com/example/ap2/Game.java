@@ -1,6 +1,5 @@
 package com.example.ap2;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,14 +41,11 @@ public class Game {
         mainMenu.setPrefHeight(40);
         mainMenu.setText("Main Menu");
         mainMenu.setFont(new Font(18));
-        mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    SceneSwitcher.mainMenu();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
+            try {
+                SceneSwitcher.mainMenu();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
         restart.setLayoutX(20);
@@ -58,26 +54,18 @@ public class Game {
         restart.setPrefHeight(40);
       restart.setText("Restart");
         restart.setFont(new Font(18));
-        restart.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                SceneSwitcher.game();
-            }
-        });
+        restart.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> SceneSwitcher.game());
        back.setLayoutX(20);
        back.setLayoutY(580);
         back.setPrefWidth(150);
        back.setPrefHeight(40);
        back.setText("Back");
        back.setFont(new Font(18));
-       back.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-           @Override
-           public void handle(MouseEvent mouseEvent) {
-               try {
-                   SceneSwitcher.gameMenu();
-               } catch (IOException e) {
-                   throw new RuntimeException(e);
-               }
+       back.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
+           try {
+               SceneSwitcher.gameMenu();
+           } catch (IOException e) {
+               throw new RuntimeException(e);
            }
        });
        root.getChildren().add(back);
