@@ -1,8 +1,18 @@
 package com.example.ap2;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
 import java.io.IOException;
 
 public class MainMenu {
+    @FXML
+    private Label score=new Label();
+    @FXML
+    public void initialize(){
+        score.setText(STR."\{History.highestScore(History.playerList)}");
+    }
+
     public void exit(){
         System.exit(0);
     }

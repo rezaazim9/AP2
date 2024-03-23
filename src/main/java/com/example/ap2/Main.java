@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-
-
 import java.io.File;
 import java.io.IOException;
 
@@ -28,7 +26,7 @@ public class Main extends Application {
         stage.show();
         Media media = new Media(new File("C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\Music2.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setVolume(0.15);
+        mediaPlayer.setVolume(0.05);
         loop();
     }
     public void loop(){
@@ -40,7 +38,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
         launch();
     }
 }

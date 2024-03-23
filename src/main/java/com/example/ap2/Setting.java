@@ -17,10 +17,10 @@ public class Setting {
 
     }
     public void saveOn(){
-
+        History.save=true;
     }
     public void saveOff(){
-
+History.save=false;
     }
 
     public  void  back() throws IOException {
