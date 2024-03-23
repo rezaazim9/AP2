@@ -1,8 +1,13 @@
 package com.example.ap2;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class Player {
     private String name;
     private int score;
+    private Date date;
+
 
     public String getName() {
         return name;
@@ -20,8 +25,9 @@ public class Player {
         this.score = score;
     }
 
-    public Player(String name, int score){
+    public Player(String name, int score,Date date){
         this.name=name;
         this.score=score;
+        this.date=date;
     }
 }

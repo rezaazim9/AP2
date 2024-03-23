@@ -5,57 +5,66 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ap2.Setting">
-   <children>
-      <Button layoutX="190.0" layoutY="550.0" mnemonicParsing="false" onAction="#back" prefHeight="100.0" prefWidth="220.0" text="Back" textFill="#c11111">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Button layoutX="420.0" layoutY="370.0" mnemonicParsing="false" onAction="#musicOn" prefHeight="50.0" prefWidth="150.0" text="ON" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Button layoutX="240.0" layoutY="370.0" mnemonicParsing="false" onAction="#musicOff" prefHeight="50.0" prefWidth="150.0" text="OFF" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Label alignment="CENTER" layoutX="20.0" layoutY="370.0" prefHeight="100.0" prefWidth="200.0" text="Theme Song" textAlignment="CENTER" textFill="#1a00ff">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <Button layoutX="420.0" layoutY="240.0" mnemonicParsing="false" onAction="#aimOn" prefHeight="50.0" prefWidth="150.0" text="ON" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Button layoutX="240.0" layoutY="240.0" mnemonicParsing="false" onAction="#aimOff" prefHeight="50.0" prefWidth="150.0" text="OFF" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Label alignment="CENTER" layoutX="20.0" layoutY="240.0" prefHeight="100.0" prefWidth="200.0" text="Aim" textAlignment="CENTER" textFill="#ff0016">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="20.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" text="Save" textAlignment="CENTER" textFill="#00ff80">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
-      <Button layoutX="240.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveOff" prefHeight="50.0" prefWidth="150.0" text="OFF" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Button layoutX="420.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveOn" prefHeight="50.0" prefWidth="150.0" text="ON" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ap2.Setting">
+   <Button layoutX="190.0" layoutY="550.0" mnemonicParsing="false" onAction="#back" prefHeight="100.0" prefWidth="220.0"
+           text="Back" textFill="#c11111">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Button layoutX="420.0" layoutY="370.0" mnemonicParsing="false" onAction="#musicOn" prefHeight="50.0"
+           prefWidth="150.0" text="ON" textAlignment="CENTER">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Button layoutX="240.0" layoutY="370.0" mnemonicParsing="false" onAction="#musicOff" prefHeight="50.0"
+           prefWidth="150.0" text="OFF" textAlignment="CENTER">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Label alignment="CENTER" layoutX="20.0" layoutY="370.0" prefHeight="100.0" prefWidth="200.0" text="Theme Song"
+          textAlignment="CENTER" textFill="#1a00ff">
+      <font>
+         <Font size="36.0"/>
+      </font>
+   </Label>
+   <Button layoutX="420.0" layoutY="240.0" mnemonicParsing="false" onAction="#aimOn" prefHeight="50.0" prefWidth="150.0"
+           text="ON" textAlignment="CENTER">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Button layoutX="240.0" layoutY="240.0" mnemonicParsing="false" onAction="#aimOff" prefHeight="50.0"
+           prefWidth="150.0" text="OFF" textAlignment="CENTER">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Label alignment="CENTER" layoutX="20.0" layoutY="240.0" prefHeight="100.0" prefWidth="200.0" text="Aim"
+          textAlignment="CENTER" textFill="#ff0016">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Label>
+   <Label alignment="CENTER" layoutX="20.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" text="Save"
+          textAlignment="CENTER" textFill="#00ff80">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Label>
+   <Button layoutX="240.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveOff" prefHeight="50.0"
+           prefWidth="150.0" text="OFF" textAlignment="CENTER">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Button layoutX="420.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveOn" prefHeight="50.0"
+           prefWidth="150.0" text="ON" textAlignment="CENTER">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
 </AnchorPane>
