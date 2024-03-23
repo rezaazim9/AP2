@@ -10,6 +10,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,9 +71,9 @@ public class Game {
             }
         });
         /////////////////////////////////////////////
-        Rectangle rectangle=new Rectangle(100,50,Color.PERU);
-        Brick brick=new Brick(10,rectangle);
-        Label label=new Label(STR."\{brick.count}");
+        Rectangle rectangle = new Rectangle(100, 50, Color.PERU);
+        Brick brick = new Brick(10, rectangle);
+        Label label = new Label(STR."\{brick.count}");
         label.setFont(new Font(35));
         label.setLayoutX(130);
         label.setLayoutY(100);

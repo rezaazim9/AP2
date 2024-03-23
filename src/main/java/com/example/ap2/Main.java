@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 public class Main extends Application {
     static Stage stage;
@@ -30,9 +30,10 @@ public class Main extends Application {
         mediaPlayer.setVolume(0.05);
         loop();
     }
-    public void loop(){
+
+    public void loop() {
         mediaPlayer.play();
-        mediaPlayer.setOnEndOfMedia(()->{
+        mediaPlayer.setOnEndOfMedia(() -> {
             mediaPlayer.seek(Duration.ZERO);
             mediaPlayer.play();
         });

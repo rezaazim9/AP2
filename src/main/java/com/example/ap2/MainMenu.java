@@ -7,21 +7,25 @@ import java.io.IOException;
 
 public class MainMenu {
     @FXML
-    private Label score=new Label();
+    private Label score = new Label();
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         score.setText(STR."\{History.highestScore(History.playerList)}");
     }
 
-    public void exit(){
+    public void exit() {
         System.exit(0);
     }
+
     public void setting() throws IOException {
         SceneSwitcher.settingMenu();
     }
+
     public void gameMenu() throws IOException {
         SceneSwitcher.gameMenu();
     }
+
     public void history() throws IOException {
         SceneSwitcher.history();
     }

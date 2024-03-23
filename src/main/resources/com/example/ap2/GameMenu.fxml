@@ -6,41 +6,49 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ap2.GameMenu">
-   <children>
-      <Button layoutX="200.0" layoutY="625.0" mnemonicParsing="false" onAction="#back" prefHeight="110.0" prefWidth="200.0" text="Back" textFill="#ec09e5">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Button layoutX="12.0" layoutY="63.0" mnemonicParsing="false" onAction="#easy" prefHeight="110.0" prefWidth="180.0" text="Easy" textFill="#2feb09">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <Button layoutX="210.0" layoutY="63.0" mnemonicParsing="false" onAction="#medium" prefHeight="110.0" prefWidth="180.0" text="Medium" textFill="#bceb09">
-         <font>
-            <Font size="34.0" />
-         </font>
-      </Button>
-      <Button layoutX="406.0" layoutY="63.0" mnemonicParsing="false" onAction="#hard" prefHeight="110.0" prefWidth="180.0" text="Hard" textFill="#eb0909">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-      <TextArea layoutX="125.0" layoutY="250.0" prefHeight="100.0" prefWidth="350.0" promptText="Enter your name">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </TextArea>
-      <Circle fill="#0586ff" layoutX="496.0" layoutY="418.0" onMouseClicked="#blue" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fill="#ff1f1f" layoutX="125.0" layoutY="418.0" onMouseClicked="#red" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fill="#e8ff1f" layoutX="253.0" layoutY="418.0" onMouseClicked="#yellow" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fill="#1fff48" layoutX="376.0" layoutY="418.0" onMouseClicked="#green" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
-      <Button layoutX="200.0" layoutY="480.0" mnemonicParsing="false" onAction="#start" prefHeight="110.0" prefWidth="200.0" text="Start" textFill="#0a9fd9">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ap2.GameMenu">
+   <Button layoutX="200.0" layoutY="625.0" mnemonicParsing="false" onAction="#back" prefHeight="110.0" prefWidth="200.0"
+           text="Back" textFill="#ec09e5">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Button layoutX="12.0" layoutY="63.0" mnemonicParsing="false" onAction="#easy" prefHeight="110.0" prefWidth="180.0"
+           text="Easy" textFill="#2feb09">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <Button layoutX="210.0" layoutY="63.0" mnemonicParsing="false" onAction="#medium" prefHeight="110.0"
+           prefWidth="180.0" text="Medium" textFill="#bceb09">
+      <font>
+         <Font size="34.0"/>
+      </font>
+   </Button>
+   <Button layoutX="406.0" layoutY="63.0" mnemonicParsing="false" onAction="#hard" prefHeight="110.0" prefWidth="180.0"
+           text="Hard" textFill="#eb0909">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
+   <TextArea layoutX="125.0" layoutY="250.0" prefHeight="100.0" prefWidth="350.0" promptText="Enter your name">
+      <font>
+         <Font size="36.0"/>
+      </font>
+   </TextArea>
+   <Circle fill="#0586ff" layoutX="496.0" layoutY="418.0" onMouseClicked="#blue" radius="43.0" stroke="BLACK"
+           strokeType="INSIDE"/>
+   <Circle fill="#ff1f1f" layoutX="125.0" layoutY="418.0" onMouseClicked="#red" radius="43.0" stroke="BLACK"
+           strokeType="INSIDE"/>
+   <Circle fill="#e8ff1f" layoutX="253.0" layoutY="418.0" onMouseClicked="#yellow" radius="43.0" stroke="BLACK"
+           strokeType="INSIDE"/>
+   <Circle fill="#1fff48" layoutX="376.0" layoutY="418.0" onMouseClicked="#green" radius="43.0" stroke="BLACK"
+           strokeType="INSIDE"/>
+   <Button layoutX="200.0" layoutY="480.0" mnemonicParsing="false" onAction="#start" prefHeight="110.0"
+           prefWidth="200.0" text="Start" textFill="#0a9fd9">
+      <font>
+         <Font size="48.0"/>
+      </font>
+   </Button>
 </AnchorPane>

@@ -25,9 +25,9 @@ public class Player {
         this.score = score;
     }
 
-    public Player(String name, int score,Date date){
-        this.name=name;
-        this.score=score;
-        this.date=date;
+    public Player(String name, int score, Date date) {
+        this.name = name;
+        this.score = score;
+        this.date = date;
     }
 }
