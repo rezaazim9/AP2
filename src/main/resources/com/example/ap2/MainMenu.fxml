@@ -22,7 +22,7 @@
             <Font size="36.0" />
          </font>
       </Button>
-      <Button layoutX="175.0" layoutY="300.0" mnemonicParsing="false" prefHeight="125.0" prefWidth="250.0" text="History" textFill="#0ac22e">
+      <Button layoutX="175.0" layoutY="300.0" mnemonicParsing="false" onAction="#history" prefHeight="125.0" prefWidth="250.0" text="History" textFill="#0ac22e">
          <font>
             <Font size="48.0" />
          </font>
@@ -32,7 +32,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label  fx:id="score" alignment="CENTER" layoutX="200.0" layoutY="80.0" prefHeight="50.0" prefWidth="200.0" text="0">
+      <Label fx:id="score" alignment="CENTER" layoutX="200.0" layoutY="80.0" prefHeight="50.0" prefWidth="200.0" text="0">
          <font>
             <Font size="36.0" />
          </font>

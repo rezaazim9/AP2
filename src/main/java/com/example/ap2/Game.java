@@ -72,7 +72,7 @@ public class Game {
         /////////////////////////////////////////////
         Rectangle rectangle=new Rectangle(100,50,Color.PERU);
         Brick brick=new Brick(10,rectangle);
-        Label label=new Label("" +brick.count);
+        Label label=new Label(STR."\{brick.count}");
         label.setFont(new Font(35));
         label.setLayoutX(130);
         label.setLayoutY(100);

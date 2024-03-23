@@ -1,11 +1,28 @@
 package com.example.ap2;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class History {
-    static List<Player> playerList = new ArrayList<>();
-    static List<Player> sortedPlayerlist = new ArrayList<>();
+public class History implements Initializable {
+    @FXML
+    private TableColumn<Player ,Integer> scoreTable;
+    @FXML
+    private TableColumn<Player ,String> nameTable;
+    @FXML
+    private TableView<Player> table;
+
+
+    static ObservableList<Player> playerList = FXCollections.observableArrayList();
+    static ObservableList<Player> sortedPlayerList = FXCollections.observableArrayList() ;
     static Player highestScorePlayer;
     static boolean save;
 
@@ -18,8 +35,8 @@ public class History {
     static public int highestScore(List<Player> list) {
         int max = 0;
         for (Player i : list) {
-            if (i.score >= max) {
-                max = i.score;
+            if (i.getScore() >= max) {
+                max = i.getScore();
                 highestScorePlayer = i;
             }
         }
@@ -27,21 +44,34 @@ public class History {
     }
 
     static public void sort() {
-        List<Player> extra = new ArrayList<>(playerList);
+        ObservableList<Player> extra = FXCollections.observableArrayList(playerList);
         k:
         while (true) {
+            if (playerList.isEmpty()){
+                break ;
+            }
             int compare = highestScore(extra);
             for (Player i : extra) {
-                if (i.score == compare) {
-                    sortedPlayerlist.add(i);
-                    if (extra.size() > 1) {
+                if (i.getScore()== compare) {
+                    sortedPlayerList.add(i);
                         extra.remove(i);
-                        break;
-                    } else {
+                    if (extra.isEmpty()){
                         break k;
                     }
+                        break;
                 }
             }
         }
+    }
+    public  void  back() throws IOException {
+        SceneSwitcher.mainMenu();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        History.sort();
+        nameTable.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        scoreTable.setCellValueFactory(new PropertyValueFactory<>("Score"));
+      table.setItems(sortedPlayerList);
+
     }
 }

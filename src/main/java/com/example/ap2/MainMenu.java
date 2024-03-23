@@ -22,4 +22,7 @@ public class MainMenu {
     public void gameMenu() throws IOException {
         SceneSwitcher.gameMenu();
     }
+    public void history() throws IOException {
+        SceneSwitcher.history();
+    }
 }

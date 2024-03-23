@@ -20,6 +20,12 @@ public class SceneSwitcher {
         Scene scene=new Scene(fxmlLoader.load());
         Main.stage.setScene(scene);
     }
+    public static void history() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("History.fxml"));
+        Scene scene=new Scene(fxmlLoader.load());
+        Main.stage.setScene(scene);
+    }
+
     public static void game() {
        new Game().game();
     }
