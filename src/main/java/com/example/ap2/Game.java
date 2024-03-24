@@ -16,22 +16,20 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Game {
     static Color ball_color = Color.RED;
     Button mainMenu = new Button();
-    private List<Brick> brickList = new ArrayList<>();
+    private final List<Brick> brickList = new ArrayList<>();
     Button restart = new Button();
     Button back = new Button();
     static List<Circle> balls = new ArrayList<>();
     double x;
     double y;
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<>() {
         @Override
         public void handle(ActionEvent actionEvent) {
             Circle i = balls.getFirst();
@@ -139,14 +137,18 @@ public class Game {
         root.getChildren().add(back);
         root.getChildren().add(restart);
         root.getChildren().add(mainMenu);
+        Scene scene = getScene(root);
+        Main.stage.setScene(scene);
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+    private Scene getScene(Group root) {
         Scene scene = new Scene(root, 600, 750);
         scene.setOnMouseClicked(e -> {
             y = 4 * (-balls.getFirst().getLayoutY() + e.getY()) / (Math.pow(Math.pow(balls.getFirst().getLayoutY() - e.getY(), 2) + Math.pow(balls.getFirst().getLayoutX() - e.getX(), 2), (double) 1 / 2));
 
             x = 4 * (-balls.getFirst().getLayoutX() + e.getX()) / (Math.pow(Math.pow(balls.getFirst().getLayoutY() - e.getY(), 2) + Math.pow(balls.getFirst().getLayoutX() - e.getX(), 2), (double) 1 / 2));
         });
-        Main.stage.setScene(scene);
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        return scene;
     }
 }
