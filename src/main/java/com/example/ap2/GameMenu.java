@@ -27,6 +27,7 @@ public class GameMenu {
 
     public void red() {
         Game.ball_color = Color.RED;
+
     }
 
     public void green() {
