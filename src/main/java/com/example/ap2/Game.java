@@ -12,6 +12,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,41 +27,46 @@ public class Game {
     Button resume = new Button();
     static List<Ball> balls = new ArrayList<>();
     static double counter = 0;
-   static double x=0.1;
-    static double y=0.1;
+    static double x = 0.1;
+    static double y = 0.1;
     static double counterBrick = 0;
-    static double z=0.005;
+    static double z = 0.005;
 
 
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15), new EventHandler<>() {
         boolean ballsMoving = false;
+
         @Override
         public void handle(ActionEvent actionEvent) {
-            if (counterBrick<=0){
+            if (counterBrick <= 0) {
+                Brick.num++;
                 Brick.brickMaker(root);
-                counterBrick=30;
+                counterBrick = 30;
             }
-            for (Ball ball:balls){
-                if (ball.isMoving){
-                    ballsMoving=true;
+            for (Ball ball : balls) {
+                if (ball.isMoving) {
+                    ballsMoving = true;
                     break;
                 }
-                ballsMoving=false;
+                ballsMoving = false;
             }
             for (Brick brick : brickList) {
                 brick.rectangle.setY(brick.rectangle.getY() + y);
                 brick.label.setLayoutY(brick.label.getLayoutY() + x);
-            }
-            for (Brick brick : brickList) {
                 if (!ballsMoving) {
                     brick.rectangle.setY(brick.rectangle.getY() + 20);
                     brick.label.setLayoutY(brick.label.getLayoutY() + 20);
-                    balls.getFirst().isMoving=true;
-                    x=0.2;
-                    y=0.2;
-                    z=0.005;
+                    balls.getFirst().isMoving = true;
+                    x = 0.2;
+                    y = 0.2;
+                    z = 0.005;
+
+                }
+                if (brick.rectangle.getY() + brick.rectangle.getHeight() >= 550) {
+                    timeline.stop();
                 }
             }
+
             for (Ball i : balls) {
                 for (Brick j : brickList) {
                     if (i.circle.getBoundsInParent().intersects(j.rectangle.getBoundsInParent())) {
@@ -80,7 +86,7 @@ public class Game {
                         root.getChildren().remove(j.label);
                     }
                 }
-                counterBrick-=z;
+                counterBrick -= z;
                 counter += 0.005;
             }
         }
@@ -117,7 +123,7 @@ public class Game {
             if (balls.getFirst() == ball) {
                 ball.circle.setLayoutY(549);
             }
-            ball.isMoving=false;
+            ball.isMoving = false;
             ball.circle.setLayoutY(balls.getFirst().circle.getLayoutY());
             ball.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
         }
@@ -133,7 +139,7 @@ public class Game {
         root = new Group();
         root.getChildren().add(line);
         for (int i = 0; i < 15; i++) {
-            Ball ball = new Ball(0, 0, new Circle(15),false);
+            Ball ball = new Ball(0, 0, new Circle(15), false);
             ball.circle.setLayoutX(300);
             ball.circle.setLayoutY(549);
             ball.circle.setFill(ball_color);
@@ -215,10 +221,10 @@ public class Game {
                 for (Ball i : balls) {
                     i.y = 4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                     i.x = 4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                    i.isMoving=true;
-                    x=0;
-                    y=0;
-                    z=0;
+                    i.isMoving = true;
+                    x = 0;
+                    y = 0;
+                    z = 0;
                 }
             }
         });
