@@ -2,7 +2,6 @@ package com.example.ap2;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -33,8 +32,8 @@ public class SceneSwitcher {
 
     public static void game() {
         if (Game.root!=null){
-            Game.timeline.setDelay(Duration.millis(10));
             Game.balls.clear();
+            Game.brickList.clear();
             Game.root.getChildren().removeAll();
         }
         new Game().game();
