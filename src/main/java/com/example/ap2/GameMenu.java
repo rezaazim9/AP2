@@ -1,10 +1,15 @@
 package com.example.ap2;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
-
 import java.io.IOException;
+import java.util.Date;
 
-public class GameMenu {
+public class GameMenu  {
+    @FXML
+    public TextArea name;
+
     public void back() throws IOException {
         SceneSwitcher.mainMenu();
     }
@@ -27,7 +32,6 @@ public class GameMenu {
 
     public void red() {
         Game.ball_color = Color.RED;
-
     }
 
     public void green() {
@@ -39,6 +43,7 @@ public class GameMenu {
     }
 
     public void start() {
+        History.savePlayer(new Player(name.getText(),0,new Date().toString()));
         SceneSwitcher.game();
     }
 }

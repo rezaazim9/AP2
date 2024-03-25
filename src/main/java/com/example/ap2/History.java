@@ -7,10 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,7 +18,7 @@ public class History implements Initializable {
     @FXML
     private TableColumn<Player, String> nameTable;
     @FXML
-    private TableColumn<Player, Date> dateTable;
+    private TableColumn<Player, String> dateTable;
     @FXML
     private TableView<Player> table;
 
@@ -28,9 +26,9 @@ public class History implements Initializable {
     static ObservableList<Player> playerList = FXCollections.observableArrayList();
     static ObservableList<Player> sortedPlayerList = FXCollections.observableArrayList();
     static Player highestScorePlayer;
-    static boolean save;
+    static boolean save = true;
 
-    public void savePlayer(Player player) {
+    public static void savePlayer(Player player) {
         if (save) {
             playerList.add(player);
         }
@@ -46,22 +44,13 @@ public class History implements Initializable {
         }
         return max;
     }
-
     static public void sort() {
-        ObservableList<Player> extra = FXCollections.observableArrayList(playerList);
-        k:
-        while (true) {
-            if (playerList.isEmpty()) {
-                break;
-            }
-            int compare = highestScore(extra);
-            for (Player i : extra) {
+        while (!playerList.isEmpty()) {
+            int compare = highestScore(playerList);
+            for (Player i : playerList) {
                 if (i.getScore() == compare) {
                     sortedPlayerList.add(i);
-                    extra.remove(i);
-                    if (extra.isEmpty()) {
-                        break k;
-                    }
+                    playerList.remove(i);
                     break;
                 }
             }
@@ -78,7 +67,10 @@ public class History implements Initializable {
         nameTable.setCellValueFactory(new PropertyValueFactory<>("Name"));
         scoreTable.setCellValueFactory(new PropertyValueFactory<>("Score"));
         dateTable.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        table.getItems().clear();
         table.setItems(sortedPlayerList);
-
+        for (Player i : sortedPlayerList) {
+            System.out.println(i.getName());
+        }
     }
 }

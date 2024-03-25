@@ -33,7 +33,10 @@ public class SceneSwitcher {
     public static void game() {
         if (Game.root!=null){
             Game.balls.clear();
+            Game.counterBrick=0;
+            Game.counter=0;
             Game.brickList.clear();
+            Brick.num=9;
             Game.root.getChildren().removeAll();
         }
         new Game().game();

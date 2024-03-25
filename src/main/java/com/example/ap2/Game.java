@@ -33,7 +33,7 @@ public class Game {
     static double z = 0.005;
 
 
-    static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15), new EventHandler<>() {
+    static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
 
         @Override

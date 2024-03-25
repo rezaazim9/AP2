@@ -32,7 +32,7 @@
          <Font size="48.0"/>
       </font>
    </Button>
-   <TextArea layoutX="125.0" layoutY="250.0" prefHeight="100.0" prefWidth="350.0" promptText="Enter your name">
+   <TextArea fx:id="name" layoutX="125.0" layoutY="250.0" prefHeight="100.0" prefWidth="350.0" promptText="Enter your name">
       <font>
          <Font size="36.0"/>
       </font>
