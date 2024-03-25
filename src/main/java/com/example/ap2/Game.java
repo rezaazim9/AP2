@@ -31,9 +31,8 @@ public class Game {
     static double z = 0.01;
     static double x=Brick.x;
     static double y=Brick.y;
-    static boolean ballsMoving = false;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
-
+        boolean ballsMoving = false;
         @Override
         public void handle(ActionEvent actionEvent) {
             for (Ball ball : balls) {
@@ -218,7 +217,7 @@ public class Game {
     Line line;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void handleMouseMove(double x, double y) {
-        if (!ballsMoving&&aim) {
+        if (aim) {
             root.getChildren().remove(line);
             double deltaX = x - balls.getFirst().circle.getLayoutX();
             double deltaY = y - balls.getFirst().circle.getLayoutY();
