@@ -25,8 +25,8 @@ public class Game {
     Button restart = new Button();
     Button back = new Button();
     static List<Ball> balls = new ArrayList<>();
-    double counter = 0;
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<>() {
+    static double counter = 0;
+     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<>() {
         @Override
         public void handle(ActionEvent actionEvent) {
             for (Ball i : balls) {
@@ -85,8 +85,8 @@ public class Game {
         }
     }
 
-    Brick brick;
-    Group root;
+    static Brick brick;
+    static Group root;
 
     public void game() {
         Line line = new Line(0, 550, 600, 550);
