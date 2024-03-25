@@ -15,25 +15,25 @@ public class GameMenu  {
         SceneSwitcher.mainMenu();
     }
 
-    public void easy() {
+    public  void easy() {
         choice=1;
-        Brick.num=9;
-        Brick.x=0.1;
-        Brick.y=0.1;
+        Brick.num=0;
+        Brick.x=0.2;
+        Brick.y=0.2;
     }
 
     public void medium() {
         choice=2;
-        Brick.num=12;
-        Brick.x=0.4;
-        Brick.y=0.4;
+        Brick.num=3;
+        Brick.x=0.8;
+        Brick.y=0.8;
     }
 
     public void hard() {
         choice=3;
-        Brick.num=15;
-        Brick.x=0.8;
-        Brick.y=0.8;
+        Brick.num=6;
+        Brick.x=1.6;
+        Brick.y=1.6;
     }
 
     public void blue() {

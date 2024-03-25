@@ -1,6 +1,8 @@
 package com.example.ap2;
 
 import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +28,13 @@ public class Game {
     static List<Ball> balls = new ArrayList<>();
     static double counter = 0;
     static double counterBrick = 0;
-    static double z = 0.005;
+    static double z = 0.01;
     static double x=Brick.x;
     static double y=Brick.y;
-    static AnimationTimer timeline = new AnimationTimer() {
-
+    static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
         @Override
-        public void handle(long l) {
-            if (counterBrick <= 0) {
-                Brick.num++;
-                Brick.brickMaker(root);
-                counterBrick =35;
-            }
+        public void handle(ActionEvent actionEvent) {
             for (Ball ball : balls) {
                 if (ball.isMoving) {
                     ballsMoving = true;
@@ -53,8 +51,8 @@ public class Game {
                     balls.getFirst().isMoving = true;
                     Brick.x = x;
                     Brick.y =y;
-                    z = 0.005;
-//
+                    z = 0.01;
+
                 }
                 if (brick.rectangle.getY() + brick.rectangle.getHeight() >= 550) {
                     timeline.stop();
@@ -80,13 +78,15 @@ public class Game {
                     if (j.count == 0) {
                         root.getChildren().remove(j.rectangle);
                         root.getChildren().remove(j.label);
+                        brickList.remove(j);
+                        break;
                     }
                 }
-//                counterBrick -= z;
-                counter += 0.005;
+                counterBrick -= z;
+                counter += 0.01;
             }
         }
-    };
+    }));
 
     public static void checkBrick(Brick brick, Ball ball) {
         if (ball.circle.getBoundsInParent().intersects(brick.rectangle.getBoundsInParent())) {
@@ -112,6 +112,10 @@ public class Game {
         }
         if ((right || left)) {
             ball.x *= -1;
+        }
+        if (ball.y==0){
+            ball.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
+            ball.circle.setLayoutY(balls.getFirst().circle.getLayoutY());
         }
         if (bottom) {
             ball.y *= 0;
@@ -176,14 +180,14 @@ public class Game {
         pause.setPrefHeight(40);
         pause.setText("Pause");
         pause.setFont(new Font(18));
-        pause.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.stop());
+        pause.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.pause());
         resume.setLayoutX(300);
         resume.setLayoutY(630);
         resume.setPrefWidth(150);
         resume.setPrefHeight(40);
         resume.setText("Resume");
         resume.setFont(new Font(18));
-        resume.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.start());
+        resume.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.play());
         back.setLayoutX(20);
         back.setLayoutY(630);
         back.setPrefWidth(150);
@@ -202,9 +206,11 @@ public class Game {
         root.getChildren().add(mainMenu);
         root.getChildren().add(pause);
         root.getChildren().add(resume);
+        Brick.brickMaker(root);
         Scene scene = getScene(root, balls);
         Main.stage.setScene(scene);
-        timeline.start();
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     private Scene getScene(Group root, List<Ball> balls) {
@@ -220,8 +226,8 @@ public class Game {
             if (!ballsMoving) {
                 counter = 0;
                 for (Ball i : balls) {
-                    i.y = 4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                    i.x = 4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                    i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                    i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                     i.isMoving = true;
                     Brick.x = 0;
                     Brick.y = 0;
