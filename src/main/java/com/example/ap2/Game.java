@@ -14,7 +14,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +30,21 @@ public class Game {
         @Override
         public void handle(ActionEvent actionEvent) {
             for (Ball i : balls) {
-                if (counter>=balls.indexOf(i)){
-                checkBrick(brick, i);
-                checkScene(i);
-                i.circle.setLayoutY(i.circle.getLayoutY() + i.y);
-                i.circle.setLayoutX(i.circle.getLayoutX() + i.x);}
-                counter+=0.005;
+                if (i.circle.getBoundsInParent().intersects(brick.rectangle.getBoundsInParent())){
+                    brick.count--;
+                }
+                if (brick.count==0){
+                    root.getChildren().remove(brick.rectangle);
+                }
+                 if (counter >= balls.indexOf(i)) {
+                     if (root.getChildren().contains(brick.rectangle)) {
+                         checkBrick(brick, i);
+                     }
+                    checkScene(i);
+                    i.circle.setLayoutY(i.circle.getLayoutY() + i.y);
+                    i.circle.setLayoutX(i.circle.getLayoutX() + i.x);
+                }
+                counter += 0.005;
             }
         }
     }));
@@ -69,16 +77,21 @@ public class Game {
         if (bottom) {
             ball.y = 0;
             ball.x = 0;
-            ball.circle.setLayoutY(549);
+            if (balls.getFirst()==ball) {
+               ball.circle.setLayoutY(549);
+            }
+            ball.circle.setLayoutY(balls.getFirst().circle.getLayoutY());
+            ball.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
         }
     }
 
     Brick brick;
+    Group root;
 
     public void game() {
         Line line = new Line(0, 550, 600, 550);
         line.setStrokeWidth(5);
-        Group root = new Group();
+        root = new Group();
         root.getChildren().add(line);
         for (int i = 0; i < 10; i++) {
             Ball ball = new Ball(0, 0, new Circle(15));
@@ -125,7 +138,8 @@ public class Game {
         });
         /////////////////////////////////////////////
         Rectangle rectangle = new Rectangle(100, 100, Color.PERU);
-        brick = new Brick(10, rectangle);
+        brick = new Brick(5, rectangle);
+        brickList.add(brick);
         Label label = new Label(STR."\{brick.count}");
         label.setFont(new Font(35));
         label.setLayoutX(130);
@@ -147,7 +161,7 @@ public class Game {
     private Scene getScene(Group root, List<Ball> balls) {
         Scene scene = new Scene(root, 600, 750);
         scene.setOnMouseClicked(e -> {
-            boolean ballsMoving = false;
+             boolean ballsMoving = false;
             for (Ball i : balls) {
                 if (i.circle.getLayoutY() < 549) {
                     ballsMoving = true;
@@ -155,13 +169,12 @@ public class Game {
                 }
             }
             if (!ballsMoving) {
-                counter=0;
+                counter = 0;
                 for (Ball i : balls) {
                     i.y = 5 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                     i.x = 5 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                 }
             }
-
         });
         return scene;
     }
