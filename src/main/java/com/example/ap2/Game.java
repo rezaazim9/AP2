@@ -31,8 +31,9 @@ public class Game {
     static double z = 0.01;
     static double x=Brick.x;
     static double y=Brick.y;
+    static boolean ballsMoving = false;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
-        boolean ballsMoving = false;
+
         @Override
         public void handle(ActionEvent actionEvent) {
             for (Ball ball : balls) {
@@ -87,6 +88,7 @@ public class Game {
             }
         }
     }));
+    public static boolean aim=true;
 
     public static void checkBrick(Brick brick, Ball ball) {
         if (ball.circle.getBoundsInParent().intersects(brick.rectangle.getBoundsInParent())) {
@@ -209,10 +211,27 @@ public class Game {
         Brick.brickMaker(root);
         Scene scene = getScene(root, balls);
         Main.stage.setScene(scene);
+        scene.setOnMouseMoved(e -> handleMouseMove(e.getX(), e.getY()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-
+    Line line;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void handleMouseMove(double x, double y) {
+        if (!ballsMoving&&aim) {
+            root.getChildren().remove(line);
+            double deltaX = x - balls.getFirst().circle.getLayoutX();
+            double deltaY = y - balls.getFirst().circle.getLayoutY();
+            double length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            double extendLength = 500;
+            double extendedX = balls.getFirst().circle.getLayoutX() + (deltaX / length) * extendLength;
+            double extendedY = balls.getFirst().circle.getLayoutY() + (deltaY / length) * extendLength;
+            line = new Line(balls.getFirst().circle.getLayoutX(), balls.getFirst().circle.getLayoutY(), extendedX, extendedY);
+            line.setStroke(Color.RED);
+            line.setStrokeWidth(3);
+            root.getChildren().add(line);
+        }
+    }
     private Scene getScene(Group root, List<Ball> balls) {
         Scene scene = new Scene(root, 600, 750);
         scene.setOnMouseClicked(e -> {
@@ -237,4 +256,5 @@ public class Game {
         });
         return scene;
     }
+
 }

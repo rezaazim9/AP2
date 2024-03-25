@@ -28,7 +28,7 @@ public class Main extends Application {
         Media media = new Media(new File("C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\Music2.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(0.05);
-//        loop();
+        loop();
     }
 
     public void loop() {

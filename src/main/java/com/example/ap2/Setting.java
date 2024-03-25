@@ -13,11 +13,10 @@ public class Setting {
     }
 
     public void aimOn() {
-
+        Game.aim=true;
     }
 
-    public void aimOff() {
-
+    public void aimOff() {Game.aim=false;
     }
 
     public void saveOn() {
