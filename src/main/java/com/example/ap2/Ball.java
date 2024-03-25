@@ -1,8 +1,6 @@
 package com.example.ap2;
 
-import javafx.animation.Transition;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 public class Ball {
     double x;
