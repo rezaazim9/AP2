@@ -9,21 +9,31 @@ import java.util.Date;
 public class GameMenu  {
     @FXML
     public TextArea name;
+    static int choice=1;
 
     public void back() throws IOException {
         SceneSwitcher.mainMenu();
     }
 
     public void easy() {
-
+        choice=1;
+        Brick.num=9;
+        Brick.x=0.1;
+        Brick.y=0.1;
     }
 
     public void medium() {
-
+        choice=2;
+        Brick.num=12;
+        Brick.x=0.4;
+        Brick.y=0.4;
     }
 
     public void hard() {
-
+        choice=3;
+        Brick.num=15;
+        Brick.x=0.8;
+        Brick.y=0.8;
     }
 
     public void blue() {

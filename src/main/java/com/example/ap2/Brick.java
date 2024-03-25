@@ -13,6 +13,8 @@ public class Brick extends Node {
     Label label;
     int count;
     Rectangle rectangle;
+    static double x = 0.1;
+    static double y = 0.1;
 
     public Brick(Label label, Rectangle rectangle, int count) {
         this.label = label;
@@ -22,26 +24,22 @@ public class Brick extends Node {
     static SecureRandom random = new SecureRandom();
     public static int num=9;
     public static void brickMaker(Group root) {
-        k:
         for (int i = 0; i < 6; i++) {
-            int j = random.nextInt(0, 5);
-            Rectangle rectangle = new Rectangle(100, 50, Color.PERU);
-            Label label = new Label();
-            label.setFont(new Font(35));
-            Brick brick = new Brick(label, rectangle, num);
-            label.setText(STR."\{brick.count}");
-            rectangle.setX(100 * j);
-            rectangle.setY(-50);
-            for (Brick brick1 : Game.brickList) {
-                if (brick1.rectangle.getX() == rectangle.getX() &&brick1.rectangle.getY()==rectangle.getY()) {
-                    continue k;
-                }
+            int j = random.nextInt(2);
+            if (j == 1) {
+                Rectangle rectangle = new Rectangle(100, 50, Color.PERU);
+                Label label = new Label();
+                label.setFont(new Font(35));
+                Brick brick = new Brick(label, rectangle, num);
+                label.setText(STR."\{brick.count}");
+                rectangle.setX(100 * i);
+                rectangle.setY(-50);
+                label.setLayoutX(rectangle.getX() + 30);
+                label.setLayoutY(rectangle.getY());
+                Game.brickList.add(brick);
+                root.getChildren().add(brick.rectangle);
+                root.getChildren().add(brick.label);
             }
-            label.setLayoutX(rectangle.getX() + 30);
-            label.setLayoutY(rectangle.getY());
-            Game.brickList.add(brick);
-            root.getChildren().add(brick.rectangle);
-            root.getChildren().add(brick.label);
         }
     }
 }

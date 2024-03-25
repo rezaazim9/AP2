@@ -36,7 +36,15 @@ public class SceneSwitcher {
             Game.counterBrick=0;
             Game.counter=0;
             Game.brickList.clear();
-            Brick.num=9;
+            if (GameMenu.choice==1) {
+                Brick.num =9;
+            }
+           else  if (GameMenu.choice==2) {
+                Brick.num =12;
+            }
+            else {
+                Brick.num =15;
+            }
             Game.root.getChildren().removeAll();
         }
         new Game().game();

@@ -1,8 +1,6 @@
 package com.example.ap2;
 
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,8 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +23,19 @@ public class Game {
     Button resume = new Button();
     static List<Ball> balls = new ArrayList<>();
     static double counter = 0;
-    static double x = 0.1;
-    static double y = 0.1;
     static double counterBrick = 0;
     static double z = 0.005;
+    static double x=Brick.x;
+    static double y=Brick.y;
+    static AnimationTimer timeline = new AnimationTimer() {
 
-
-    static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
-
         @Override
-        public void handle(ActionEvent actionEvent) {
+        public void handle(long l) {
             if (counterBrick <= 0) {
                 Brick.num++;
                 Brick.brickMaker(root);
-                counterBrick = 30;
+                counterBrick =35;
             }
             for (Ball ball : balls) {
                 if (ball.isMoving) {
@@ -51,23 +45,26 @@ public class Game {
                 ballsMoving = false;
             }
             for (Brick brick : brickList) {
-                brick.rectangle.setY(brick.rectangle.getY() + y);
-                brick.label.setLayoutY(brick.label.getLayoutY() + x);
+                brick.rectangle.setY(brick.rectangle.getY() + Brick.y);
+                brick.label.setLayoutY(brick.label.getLayoutY() + Brick.x);
                 if (!ballsMoving) {
                     brick.rectangle.setY(brick.rectangle.getY() + 20);
                     brick.label.setLayoutY(brick.label.getLayoutY() + 20);
                     balls.getFirst().isMoving = true;
-                    x = 0.2;
-                    y = 0.2;
+                    Brick.x = x;
+                    Brick.y =y;
                     z = 0.005;
-
+//
                 }
                 if (brick.rectangle.getY() + brick.rectangle.getHeight() >= 550) {
                     timeline.stop();
                 }
             }
-
             for (Ball i : balls) {
+                if (i.y==0){
+                    i.circle.setLayoutY(balls.getFirst().circle.getLayoutY());
+                }
+                checkScene(i);
                 for (Brick j : brickList) {
                     if (i.circle.getBoundsInParent().intersects(j.rectangle.getBoundsInParent())) {
                         j.count--;
@@ -77,7 +74,6 @@ public class Game {
                         if (root.getChildren().contains(j.rectangle)) {
                             checkBrick(j, i);
                         }
-                        checkScene(i);
                         i.circle.setLayoutY(i.circle.getLayoutY() + i.y);
                         i.circle.setLayoutX(i.circle.getLayoutX() + i.x);
                     }
@@ -86,11 +82,11 @@ public class Game {
                         root.getChildren().remove(j.label);
                     }
                 }
-                counterBrick -= z;
+//                counterBrick -= z;
                 counter += 0.005;
             }
         }
-    }));
+    };
 
     public static void checkBrick(Brick brick, Ball ball) {
         if (ball.circle.getBoundsInParent().intersects(brick.rectangle.getBoundsInParent())) {
@@ -118,8 +114,14 @@ public class Game {
             ball.x *= -1;
         }
         if (bottom) {
-            ball.y = 0;
-            ball.x = 0;
+            ball.y *= 0;
+            ball.x *= 0;
+            if (ball.circle.getLayoutX()<=15){
+                ball.circle.setLayoutX(16);
+            } else if (ball.circle.getLayoutX()>=585) {
+                ball.circle.setLayoutX(584);
+
+            }
             if (balls.getFirst() == ball) {
                 ball.circle.setLayoutY(549);
             }
@@ -174,14 +176,14 @@ public class Game {
         pause.setPrefHeight(40);
         pause.setText("Pause");
         pause.setFont(new Font(18));
-        pause.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.pause());
+        pause.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.stop());
         resume.setLayoutX(300);
         resume.setLayoutY(630);
         resume.setPrefWidth(150);
         resume.setPrefHeight(40);
         resume.setText("Resume");
         resume.setFont(new Font(18));
-        resume.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.play());
+        resume.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.start());
         back.setLayoutX(20);
         back.setLayoutY(630);
         back.setPrefWidth(150);
@@ -202,8 +204,7 @@ public class Game {
         root.getChildren().add(resume);
         Scene scene = getScene(root, balls);
         Main.stage.setScene(scene);
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        timeline.start();
     }
 
     private Scene getScene(Group root, List<Ball> balls) {
@@ -222,8 +223,8 @@ public class Game {
                     i.y = 4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                     i.x = 4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                     i.isMoving = true;
-                    x = 0;
-                    y = 0;
+                    Brick.x = 0;
+                    Brick.y = 0;
                     z = 0;
                 }
             }
