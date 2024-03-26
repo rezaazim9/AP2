@@ -36,11 +36,13 @@ public class Game {
     static double x ;
      static double y ;
     static int score = 0;
+    static double time=0;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
 
         @Override
         public void handle(ActionEvent actionEvent) {
+            time+=0.02;
             for (Ball ball : balls) {
                 if (ball.isMoving) {
                     ballsMoving = true;
@@ -166,7 +168,7 @@ public class Game {
         mainMenu.setFont(new Font(18));
         mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
-                player.setScore(score);
+                player.setScore(score-(int)time);
                 SceneSwitcher.mainMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -179,7 +181,7 @@ public class Game {
         restart.setText("Restart");
         restart.setFont(new Font(18));
         restart.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
-            player.setScore(score);
+            player.setScore(score-(int)time);
             SceneSwitcher.game(new Player(player.getName(), 0, new Date().toString()));
         });
         pause.setLayoutX(300);
@@ -204,7 +206,7 @@ public class Game {
         back.setFont(new Font(18));
         back.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
-                player.setScore(score);
+                player.setScore(score-(int)time);
                 SceneSwitcher.gameMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
