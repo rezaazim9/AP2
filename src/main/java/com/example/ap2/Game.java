@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -13,7 +14,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +31,8 @@ public class Game {
     Button resume = new Button();
     static List<Ball> balls = new ArrayList<>();
     static double counter = 0;
+    static Label timeLabel=new Label();
+    static Label scoreLabel=new Label();
     static double counterBrick = 0;
     static double z = 0.01;
     static double x ;
@@ -43,6 +45,7 @@ public class Game {
         @Override
         public void handle(ActionEvent actionEvent) {
             time+=0.02;
+            timeLabel.setText(STR."\{time}");
             for (Ball ball : balls) {
                 if (ball.isMoving) {
                     ballsMoving = true;
@@ -94,6 +97,7 @@ public class Game {
                 counterBrick -= z;
                 counter += 0.01;
             }
+            scoreLabel.setText(STR."\{score-(int)time}");
         }
     }));
     public static boolean aim = true;
@@ -198,6 +202,18 @@ public class Game {
         resume.setText("Resume");
         resume.setFont(new Font(18));
         resume.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> timeline.play());
+        timeLabel.setLayoutY(600);
+        timeLabel.setLayoutX(500);
+        timeLabel.setPrefHeight(50);
+        timeLabel.setPrefWidth(100);
+        timeLabel.setFont(new Font(35));
+        timeLabel.setText(STR."\{time}");
+        scoreLabel.setLayoutY(650);
+        scoreLabel.setLayoutX(500);
+        scoreLabel.setPrefHeight(50);
+        scoreLabel.setPrefWidth(100);
+        scoreLabel.setFont(new Font(35));
+        scoreLabel.setText(STR."\{score}");
         back.setLayoutX(20);
         back.setLayoutY(630);
         back.setPrefWidth(150);
@@ -217,6 +233,8 @@ public class Game {
         root.getChildren().add(mainMenu);
         root.getChildren().add(pause);
         root.getChildren().add(resume);
+        root.getChildren().add(timeLabel);
+        root.getChildren().add(scoreLabel);
         Brick.brickMaker(root);
         Scene scene = getScene(root, balls);
         Main.stage.setScene(scene);
