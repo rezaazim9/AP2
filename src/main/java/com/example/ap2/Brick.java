@@ -15,11 +15,13 @@ public class Brick extends Node {
     Rectangle rectangle;
     static double x = 0.2;
     static double y = 0.2;
+    int count2;
 
-    public Brick(Label label, Rectangle rectangle, int count) {
+    public Brick(Label label, Rectangle rectangle, int count ,int count2) {
         this.label = label;
         this.rectangle = rectangle;
         this.count = count;
+        this.count2=count2;
     }
     static SecureRandom random = new SecureRandom();
     public static int num=0;
@@ -31,7 +33,7 @@ public class Brick extends Node {
                 Rectangle rectangle = new Rectangle(100, 50, Color.PERU);
                 Label label = new Label();
                 label.setFont(new Font(35));
-                Brick brick = new Brick(label, rectangle,k+10+num);
+                Brick brick = new Brick(label, rectangle,k+10+num,k+10+num);
                 label.setText(STR."\{brick.count}");
                 rectangle.setX(100 * i);
                 rectangle.setY(-50*k-50);

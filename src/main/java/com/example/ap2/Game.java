@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.ap2.Brick.random;
+
 public class Game {
     static Color ball_color = Color.RED;
     Button mainMenu = new Button();
@@ -83,7 +85,7 @@ public class Game {
                         root.getChildren().remove(j.rectangle);
                         root.getChildren().remove(j.label);
                         brickList.remove(j);
-                        score++;
+                        score+=j.count2;
                         break;
                     }
                 }
@@ -126,7 +128,6 @@ public class Game {
         if (bottom) {
             ball.y *= 0;
             ball.x *= 0;
-
             if (balls.getFirst() == ball) {
                 ball.circle.setLayoutY(549);
             }
@@ -147,7 +148,7 @@ public class Game {
         line.setStrokeWidth(5);
         root = new Group();
         root.getChildren().add(line);
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 9; i++) {
             Ball ball = new Ball(0, 0, new Circle(15), false);
             ball.circle.setLayoutX(300);
             ball.circle.setLayoutY(549);
@@ -248,8 +249,13 @@ public class Game {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 if (e.getClickCount() == 2) {
                     for (Ball i : balls) {
+                        if (balls.getFirst().circle.getLayoutY()<549&&i!=balls.getFirst()) {
+                            i.circle.setLayoutX(random.nextInt(20, 580));
+                        }
+                        else {
+                            i.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
+                        }
                         i.circle.setLayoutY(549);
-                        i.circle.setLayoutX(300);
                         i.x = 0;
                         i.y = 0;
                         i.isMoving = false;
@@ -265,6 +271,12 @@ public class Game {
                     }
                     if (!ballsMoving) {
                         counter = 0;
+                        Ball newBall = new Ball(0, 0, new Circle(15), false);
+                        newBall.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
+                        newBall.circle.setLayoutY(549);
+                        newBall.circle.setFill(ball_color);
+                        balls.add(newBall);
+                        root.getChildren().add(newBall.circle);
                         for (Ball i : balls) {
                             i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                             i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
