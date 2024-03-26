@@ -1,8 +1,5 @@
 package com.example.ap2;
 
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 public class Player {
     private String name;
 
@@ -20,10 +17,6 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getScore() {

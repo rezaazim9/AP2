@@ -69,8 +69,5 @@ public class History implements Initializable {
         dateTable.setCellValueFactory(new PropertyValueFactory<>("Date"));
         table.getItems().clear();
         table.setItems(sortedPlayerList);
-        for (Player i : sortedPlayerList) {
-            System.out.println(i.getName());
-        }
     }
 }

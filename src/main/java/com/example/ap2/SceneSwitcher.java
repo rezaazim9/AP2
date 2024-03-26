@@ -30,7 +30,8 @@ public class SceneSwitcher {
         Main.stage.setScene(scene);
     }
 
-    public static void game() {
+    public static void game(Player player) {
+        History.savePlayer(player);
         if (Game.root!=null){
             Game.balls.clear();
             Game.counterBrick=0;
@@ -47,6 +48,6 @@ public class SceneSwitcher {
             }
             Game.root.getChildren().removeAll();
         }
-        new Game().game();
+        new Game().game(player);
     }
 }

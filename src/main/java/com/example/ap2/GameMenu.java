@@ -53,7 +53,7 @@ public class GameMenu  {
     }
 
     public void start() {
-        History.savePlayer(new Player(name.getText(),0,new Date().toString()));
-        SceneSwitcher.game();
+        Player player=new Player(name.getText(),0,new Date().toString());
+        SceneSwitcher.game(player);
     }
 }

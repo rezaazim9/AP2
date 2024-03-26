@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +17,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Game {
@@ -30,8 +32,9 @@ public class Game {
     static double counter = 0;
     static double counterBrick = 0;
     static double z = 0.01;
-    static double x = Brick.x;
-    static double y = Brick.y;
+    static double x ;
+     static double y ;
+    static int score = 0;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
 
@@ -81,6 +84,7 @@ public class Game {
                         root.getChildren().remove(j.rectangle);
                         root.getChildren().remove(j.label);
                         brickList.remove(j);
+                        score++;
                         break;
                     }
                 }
@@ -109,7 +113,7 @@ public class Game {
         boolean right = ball.circle.getLayoutX() <= ball.circle.getRadius() + 1;
         boolean left = ball.circle.getLayoutX() >= 599 - ball.circle.getRadius();
         boolean bottom = ball.circle.getLayoutY() >= 550;
-        boolean up = ball.circle.getLayoutY() <= ball.circle.getRadius() + 1;
+        boolean up = ball.circle.getLayoutY() <= ball.circle.getRadius();
         if ((up)) {
             ball.y *= -1;
         }
@@ -136,8 +140,10 @@ public class Game {
 
     static Group root;
 
-    public void game() {
-
+    public void game(Player player) {
+        score = 0;
+        x=Brick.x;
+        y=Brick.y;
         Line line = new Line(0, 550, 600, 550);
         line.setStrokeWidth(5);
         root = new Group();
@@ -160,6 +166,7 @@ public class Game {
         mainMenu.setFont(new Font(18));
         mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
+                player.setScore(score);
                 SceneSwitcher.mainMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -171,7 +178,10 @@ public class Game {
         restart.setPrefHeight(40);
         restart.setText("Restart");
         restart.setFont(new Font(18));
-        restart.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> SceneSwitcher.game());
+        restart.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
+            player.setScore(score);
+            SceneSwitcher.game(new Player(player.getName(), 0, new Date().toString()));
+        });
         pause.setLayoutX(300);
         pause.setLayoutY(580);
         pause.setPrefWidth(150);
@@ -194,6 +204,7 @@ public class Game {
         back.setFont(new Font(18));
         back.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
+                player.setScore(score);
                 SceneSwitcher.gameMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -210,6 +221,7 @@ public class Game {
 //        scene.setOnMouseMoved(e -> handleMouseMove(e.getX(), e.getY()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
     }
 
     Line line;
@@ -244,24 +256,26 @@ public class Game {
                         i.isMoving = false;
                     }
                 }
-                boolean ballsMoving = false;
-                for (Ball i : balls) {
-                    if (i.circle.getLayoutY() < 549) {
-                        ballsMoving = true;
-                        break;
-                    }
-                }
-                if (!ballsMoving) {
-                    counter = 0;
+                else {
+                    boolean ballsMoving = false;
                     for (Ball i : balls) {
-                        i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                        i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                        i.isMoving = true;
-                        Brick.x = 0;
-                        Brick.y = 0;
-                        z = 0;
+                        if (i.circle.getLayoutY() < 549) {
+                            ballsMoving = true;
+                            break;
+                        }
                     }
+                    if (!ballsMoving) {
+                        counter = 0;
+                        for (Ball i : balls) {
+                            i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                            i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                            i.isMoving = true;
+                            Brick.x = 0;
+                            Brick.y = 0;
+                            z = 0;
+                        }
 
+                    }
                 }
             }
         });
