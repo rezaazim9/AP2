@@ -218,17 +218,15 @@ public class Game {
         Brick.brickMaker(root);
         Scene scene = getScene(root, balls);
         Main.stage.setScene(scene);
-//        scene.setOnMouseMoved(e -> handleMouseMove(e.getX(), e.getY()));
+        scene.setOnMouseMoved(e -> handleMouseMove(e.getX(), e.getY()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
     }
-
     Line line;
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void handleMouseMove(double x, double y) {
-        if (aim) {
+        if (aim&&!ballsMoving) {
             root.getChildren().remove(line);
             double deltaX = x - balls.getFirst().circle.getLayoutX();
             double deltaY = y - balls.getFirst().circle.getLayoutY();
@@ -242,6 +240,7 @@ public class Game {
             root.getChildren().add(line);
         }
     }
+    boolean ballsMoving;
 
     private Scene getScene(Group root, List<Ball> balls) {
         Scene scene = new Scene(root, 600, 750);
@@ -249,7 +248,7 @@ public class Game {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 if (e.getClickCount() == 2) {
                     for (Ball i : balls) {
-                        if (balls.getFirst().circle.getLayoutY()<549&&i!=balls.getFirst()) {
+                        if (balls.getFirst().circle.getLayoutY()<549&&i!=balls.getFirst()&&balls.getFirst().circle.getLayoutX()<=550) {
                             i.circle.setLayoutX(random.nextInt(20, 580));
                         }
                         else {
@@ -262,7 +261,7 @@ public class Game {
                     }
                 }
                 else {
-                    boolean ballsMoving = false;
+                     ballsMoving = false;
                     for (Ball i : balls) {
                         if (i.circle.getLayoutY() < 549) {
                             ballsMoving = true;
@@ -278,8 +277,8 @@ public class Game {
                         balls.add(newBall);
                         root.getChildren().add(newBall.circle);
                         for (Ball i : balls) {
-                            i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                            i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                            i.y = 0.2 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                            i.x = 0.2 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
                             i.isMoving = true;
                             Brick.x = 0;
                             Brick.y = 0;

@@ -26,7 +26,7 @@ public class Brick extends Node {
     static SecureRandom random = new SecureRandom();
     public static int num=0;
     public static void brickMaker(Group root) {
-        for (int k=0;k<20;k++){
+        for (int k=0;k<30;k++){
         for (int i = 0; i < 6; i++) {
             int j = random.nextInt(2);
             if (j == 1) {
