@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -29,10 +30,11 @@ public class Game {
     static double counter = 0;
     static double counterBrick = 0;
     static double z = 0.01;
-    static double x=Brick.x;
-    static double y=Brick.y;
+    static double x = Brick.x;
+    static double y = Brick.y;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
+
         @Override
         public void handle(ActionEvent actionEvent) {
             for (Ball ball : balls) {
@@ -50,7 +52,7 @@ public class Game {
                     brick.label.setLayoutY(brick.label.getLayoutY() + 20);
                     balls.getFirst().isMoving = true;
                     Brick.x = x;
-                    Brick.y =y;
+                    Brick.y = y;
                     z = 0.01;
 
                 }
@@ -59,7 +61,7 @@ public class Game {
                 }
             }
             for (Ball i : balls) {
-                if (i.y==0){
+                if (i.y == 0) {
                     i.circle.setLayoutY(balls.getFirst().circle.getLayoutY());
                 }
                 checkScene(i);
@@ -87,7 +89,7 @@ public class Game {
             }
         }
     }));
-    public static boolean aim=true;
+    public static boolean aim = true;
 
     public static void checkBrick(Brick brick, Ball ball) {
         if (ball.circle.getBoundsInParent().intersects(brick.rectangle.getBoundsInParent())) {
@@ -104,29 +106,24 @@ public class Game {
     }
 
     public static void checkScene(Ball ball) {
-        boolean right = ball.circle.getLayoutX() <= ball.circle.getRadius();
-        boolean left = ball.circle.getLayoutX() >= 600 - ball.circle.getRadius();
+        boolean right = ball.circle.getLayoutX() <= ball.circle.getRadius() + 1;
+        boolean left = ball.circle.getLayoutX() >= 599 - ball.circle.getRadius();
         boolean bottom = ball.circle.getLayoutY() >= 550;
-        boolean up = ball.circle.getLayoutY() <= ball.circle.getRadius();
+        boolean up = ball.circle.getLayoutY() <= ball.circle.getRadius() + 1;
         if ((up)) {
             ball.y *= -1;
         }
         if ((right || left)) {
             ball.x *= -1;
         }
-        if (ball.y==0){
+        if (ball.y == 0) {
             ball.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
             ball.circle.setLayoutY(balls.getFirst().circle.getLayoutY());
         }
         if (bottom) {
             ball.y *= 0;
             ball.x *= 0;
-            if (ball.circle.getLayoutX()<=15){
-                ball.circle.setLayoutX(16);
-            } else if (ball.circle.getLayoutX()>=585) {
-                ball.circle.setLayoutX(584);
 
-            }
             if (balls.getFirst() == ball) {
                 ball.circle.setLayoutY(549);
             }
@@ -210,11 +207,13 @@ public class Game {
         Brick.brickMaker(root);
         Scene scene = getScene(root, balls);
         Main.stage.setScene(scene);
-        scene.setOnMouseMoved(e -> handleMouseMove(e.getX(), e.getY()));
+//        scene.setOnMouseMoved(e -> handleMouseMove(e.getX(), e.getY()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
+
     Line line;
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void handleMouseMove(double x, double y) {
         if (aim) {
@@ -231,25 +230,38 @@ public class Game {
             root.getChildren().add(line);
         }
     }
+
     private Scene getScene(Group root, List<Ball> balls) {
         Scene scene = new Scene(root, 600, 750);
         scene.setOnMouseClicked(e -> {
-            boolean ballsMoving = false;
-            for (Ball i : balls) {
-                if (i.circle.getLayoutY() < 549) {
-                    ballsMoving = true;
-                    break;
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                if (e.getClickCount() == 2) {
+                    for (Ball i : balls) {
+                        i.circle.setLayoutY(549);
+                        i.circle.setLayoutX(300);
+                        i.x = 0;
+                        i.y = 0;
+                        i.isMoving = false;
+                    }
                 }
-            }
-            if (!ballsMoving) {
-                counter = 0;
+                boolean ballsMoving = false;
                 for (Ball i : balls) {
-                    i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                    i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
-                    i.isMoving = true;
-                    Brick.x = 0;
-                    Brick.y = 0;
-                    z = 0;
+                    if (i.circle.getLayoutY() < 549) {
+                        ballsMoving = true;
+                        break;
+                    }
+                }
+                if (!ballsMoving) {
+                    counter = 0;
+                    for (Ball i : balls) {
+                        i.y = 0.4 * (-i.circle.getLayoutY() + e.getY()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                        i.x = 0.4 * (-i.circle.getLayoutX() + e.getX()) / (Math.pow(Math.pow(i.circle.getLayoutY() - e.getY(), 2) + Math.pow(i.circle.getLayoutX() - e.getX(), 2), (double) 1 / 2));
+                        i.isMoving = true;
+                        Brick.x = 0;
+                        Brick.y = 0;
+                        z = 0;
+                    }
+
                 }
             }
         });
