@@ -1,8 +1,10 @@
 package com.example.ap2;
 
+import eu.hansolo.tilesfx.tools.Point;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,10 +16,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.ap2.Brick.random;
 
@@ -31,20 +35,21 @@ public class Game {
     Button resume = new Button();
     static List<Ball> balls = new ArrayList<>();
     static double counter = 0;
-    static Label timeLabel=new Label();
-    static Label scoreLabel=new Label();
+    static Label timeLabel = new Label();
+    static Label scoreLabel = new Label();
     static double counterBrick = 0;
     static double z = 0.01;
-    static double x ;
-     static double y ;
+    static double x;
+    static double y;
     static int score = 0;
-    static double time=0;
+    static double time = 0;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
 
+
         @Override
         public void handle(ActionEvent actionEvent) {
-            time+=0.02;
+            time += 0.02;
             timeLabel.setText(STR."\{time}");
             for (Ball ball : balls) {
                 if (ball.isMoving) {
@@ -89,15 +94,16 @@ public class Game {
                     if (j.count == 0) {
                         root.getChildren().remove(j.rectangle);
                         root.getChildren().remove(j.label);
+                        System.out.println(brickList.indexOf(j));
                         brickList.remove(j);
-                        score+=j.count2;
+                        score += j.count2;
                         break;
                     }
                 }
                 counterBrick -= z;
                 counter += 0.01;
             }
-            scoreLabel.setText(STR."\{score-(int)time}");
+            scoreLabel.setText(STR."\{score - (int) time}");
         }
     }));
     public static boolean aim = true;
@@ -148,8 +154,8 @@ public class Game {
 
     public void game(Player player) {
         score = 0;
-        x=Brick.x;
-        y=Brick.y;
+        x = Brick.x;
+        y = Brick.y;
         Line line = new Line(0, 550, 600, 550);
         line.setStrokeWidth(5);
         root = new Group();
@@ -172,7 +178,7 @@ public class Game {
         mainMenu.setFont(new Font(18));
         mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
-                player.setScore(score-(int)time);
+                player.setScore(score - (int) time);
                 SceneSwitcher.mainMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -185,7 +191,7 @@ public class Game {
         restart.setText("Restart");
         restart.setFont(new Font(18));
         restart.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
-            player.setScore(score-(int)time);
+            player.setScore(score - (int) time);
             SceneSwitcher.game(new Player(player.getName(), 0, new Date().toString()));
         });
         pause.setLayoutX(300);
@@ -222,7 +228,7 @@ public class Game {
         back.setFont(new Font(18));
         back.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
-                player.setScore(score-(int)time);
+                player.setScore(score - (int) time);
                 SceneSwitcher.gameMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -243,35 +249,86 @@ public class Game {
         timeline.play();
 
     }
-    Line line;
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static double deltaX;
+    static double deltaY;
+    static double length;
+    static Line line;
+
     public void handleMouseMove(double x, double y) {
-        if (aim&&!ballsMoving) {
-            root.getChildren().remove(line);
-            double deltaX = x - balls.getFirst().circle.getLayoutX();
-            double deltaY = y - balls.getFirst().circle.getLayoutY();
-            double length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            double extendLength = 500;
+        root.getChildren().remove(line);
+        if (aim && ballsNotMoving()) {
+            deltaX = x - balls.getFirst().circle.getLayoutX();
+            deltaY = y - balls.getFirst().circle.getLayoutY();
+            length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            double extendLength = 700;
             double extendedX = balls.getFirst().circle.getLayoutX() + (deltaX / length) * extendLength;
             double extendedY = balls.getFirst().circle.getLayoutY() + (deltaY / length) * extendLength;
             line = new Line(balls.getFirst().circle.getLayoutX(), balls.getFirst().circle.getLayoutY(), extendedX, extendedY);
             line.setStroke(Color.RED);
             line.setStrokeWidth(3);
+            for (Brick brick : brickList) {
+                if (intersect(line, brick)) {
+                    lineShrink(brick, line, deltaX, deltaY);
+                }
+            }
             root.getChildren().add(line);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
     }
-    boolean ballsMoving;
+
+    public boolean intersect(Line line, Brick brick) {
+        Line up = new Line(brick.rectangle.getX(), brick.rectangle.getY(), brick.rectangle.getX() + brick.rectangle.getWidth(), brick.rectangle.getY());
+        Line down = new Line(brick.rectangle.getX(), brick.rectangle.getY() + brick.rectangle.getHeight(), brick.rectangle.getX() + brick.rectangle.getWidth(), brick.rectangle.getY() + brick.rectangle.getHeight());
+        Line right = new Line(brick.rectangle.getX() + brick.rectangle.getWidth(), brick.rectangle.getY(), brick.rectangle.getX() + brick.rectangle.getWidth(), brick.rectangle.getY() + brick.rectangle.getHeight());
+        Line left = new Line(brick.rectangle.getX(), brick.rectangle.getY()+ brick.rectangle.getHeight(), brick.rectangle.getX(), brick.rectangle.getY() );
+        boolean UP = up.contains(lineIntersect(up.getStartX(), up.getStartY(), up.getEndX(),up.getEndY(),line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY()));
+        boolean DOWN = down.contains(lineIntersect(down.getStartX(), down.getStartY(), down.getEndX(),down.getEndY(),line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY()));
+        boolean RIGHT = right.contains(lineIntersect(right.getStartX(), right.getStartY(), right.getEndX(),right.getEndY(),line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY()));
+        boolean LEFT = left.contains(lineIntersect(left.getStartX(), left.getStartY(), left.getEndX(),left.getEndY(),line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY()));
+        return (DOWN&&LEFT)|| (UP && RIGHT) || (UP && LEFT) || (DOWN && RIGHT)  || (LEFT && RIGHT)||(UP && DOWN) ;
+    }
+    public static Point2D lineIntersect(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+        double m = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+        if (m == 0.0) {
+            return new Point2D(0,0);
+        }
+        double ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / m;
+        double ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / m;
+        if (ua >= 0.0 && ua <= 1.0 && ub >= 0.0 && ub <= 1.0) {
+            return new Point2D(x1 + ua * (x2 - x1), y1 + ua * (y2 - y1));
+        }
+        return new Point2D(0,0);
+    }
+
+
+    public static void lineShrink(Brick brick, Line line, double x, double y) {
+        length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        while (line.intersects(brick.rectangle.getBoundsInParent())) {
+            line.setEndX(line.getEndX() - x / length);
+            line.setEndY(line.getEndY() - y / length);
+        }
+    }
+
+    private boolean ballsNotMoving() {
+        for (Ball ball : balls) {
+            if (ball.circle.getLayoutY() < 549) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private Scene getScene(Group root, List<Ball> balls) {
         Scene scene = new Scene(root, 600, 750);
         scene.setOnMouseClicked(e -> {
+            boolean ballsMoving;
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 if (e.getClickCount() == 2) {
                     for (Ball i : balls) {
-                        if (balls.getFirst().circle.getLayoutY()<549&&i!=balls.getFirst()&&balls.getFirst().circle.getLayoutX()<=550) {
+                        if (balls.getFirst().circle.getLayoutY() < 549 && i != balls.getFirst() && (balls.getFirst().circle.getLayoutX() <= 570 || balls.getFirst().circle.getLayoutX() >= 20)) {
                             i.circle.setLayoutX(random.nextInt(20, 580));
-                        }
-                        else {
+                        } else {
                             i.circle.setLayoutX(balls.getFirst().circle.getLayoutX());
                         }
                         i.circle.setLayoutY(549);
@@ -279,9 +336,8 @@ public class Game {
                         i.y = 0;
                         i.isMoving = false;
                     }
-                }
-                else {
-                     ballsMoving = false;
+                } else {
+                    ballsMoving = false;
                     for (Ball i : balls) {
                         if (i.circle.getLayoutY() < 549) {
                             ballsMoving = true;
