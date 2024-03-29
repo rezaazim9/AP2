@@ -44,8 +44,12 @@ public class Game {
     static double speedTime=20;
     static double time = 0;
     static boolean speed;
+    static double orangeTime;
+    static double blueTime;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
+        boolean blue=false;
+        boolean orange=false;
 
 
         @Override
@@ -56,6 +60,16 @@ public class Game {
              speed=false;
             speedTime+=0.02;
             weightTime+=0.02;
+            orangeTime+=0.1;
+            blueTime+=1;
+            if (orange){
+                SpecialItem.orange(orangeTime);
+
+            }
+            else if (blue){
+                SpecialItem.blue(blueTime);
+
+            }
             if (speedTime<15){
                 speed=true;
             }
@@ -135,6 +149,13 @@ public class Game {
                         i.circle.setLayoutX(i.circle.getLayoutX() + i.x);
                     }
                     if (j.count <= 0) {
+                        if (j.rectangle.getFill()==Color.ORANGE){
+                            orangeTime=0;
+                            orange=true;
+                        }else if (j.rectangle.getFill()==Color.BLUE){
+                            blueTime=0;
+                            blue=true;
+                        }
                         root.getChildren().remove(j.rectangle);
                         root.getChildren().remove(j.label);
                         brickList.remove(j);
