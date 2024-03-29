@@ -44,8 +44,8 @@ public class Game {
     static double speedTime=20;
     static double time = 0;
     static boolean speed;
-    static double orangeTime;
-    static double blueTime;
+    static double orangeTime=0;
+    static double blueTime=0;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
         boolean blue=false;
@@ -66,7 +66,7 @@ public class Game {
                 SpecialItem.orange(orangeTime);
 
             }
-            else if (blue){
+             if (blue){
                 SpecialItem.blue(blueTime);
 
             }
@@ -152,7 +152,7 @@ public class Game {
                         if (j.rectangle.getFill()==Color.ORANGE){
                             orangeTime=0;
                             orange=true;
-                        }else if (j.rectangle.getFill()==Color.BLUE){
+                        } if (j.rectangle.getFill()==Color.BLUE){
                             blueTime=0;
                             blue=true;
                         }

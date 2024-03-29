@@ -33,6 +33,8 @@ public class SceneSwitcher {
     public static void game(Player player) {
         History.savePlayer(player);
         Game.time=0;
+        Game.orangeTime=0;
+        Game.blueTime=0;
         Game.rand = false;
         if (Game.root!=null){
             Game.balls.clear();
