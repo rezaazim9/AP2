@@ -33,7 +33,6 @@ public class History implements Initializable {
             playerList.add(player);
         }
     }
-
     static public int highestScore(List<Player> list) {
         int max=0;
         if (!playerList.isEmpty()) {

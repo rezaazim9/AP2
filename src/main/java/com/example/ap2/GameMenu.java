@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.util.Date;
 
+import static com.example.ap2.Brick.random;
+
 public class GameMenu  {
     @FXML
     public TextArea name;
@@ -20,6 +22,7 @@ public class GameMenu  {
         Brick.num=0;
         Brick.x=0.2;
         Brick.y=0.2;
+        Item.h=2;
     }
 
     public void medium() {
@@ -27,6 +30,7 @@ public class GameMenu  {
         Brick.num=3;
         Brick.x=0.8;
         Brick.y=0.8;
+        Item.h=3;
     }
 
     public void hard() {
@@ -34,6 +38,7 @@ public class GameMenu  {
         Brick.num=6;
         Brick.x=1.6;
         Brick.y=1.6;
+        Item.h=4;
     }
 
     public void blue() {
