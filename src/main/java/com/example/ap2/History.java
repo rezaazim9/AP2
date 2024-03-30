@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,7 +26,6 @@ public class History implements Initializable {
 
     static ObservableList<Player> playerList = FXCollections.observableArrayList();
     static ObservableList<Player> sortedPlayerList = FXCollections.observableArrayList();
-    static Player highestScorePlayer;
     static boolean save = true;
 
     public static void savePlayer(Player player) {
@@ -35,24 +35,26 @@ public class History implements Initializable {
     }
     static public int highestScore(List<Player> list) {
         int max=0;
-        if (!playerList.isEmpty()) {
-             max = playerList.getFirst().getScore();
+        if (!list.isEmpty()) {
+             max = list.getFirst().getScore();
         }
         for (Player i : list) {
             if (i.getScore() >= max) {
                 max = i.getScore();
-                highestScorePlayer = i;
             }
         }
         return max;
     }
+    static List<Player> extra=new ArrayList<>();
     static public void sort() {
-        while (!playerList.isEmpty()) {
-            int compare = highestScore(playerList);
-            for (Player i : playerList) {
+        sortedPlayerList.clear();
+        extra.addAll(playerList);
+        while (!extra.isEmpty()) {
+            int compare = highestScore(extra);
+            for (Player i : extra) {
                 if (i.getScore() == compare) {
                     sortedPlayerList.add(i);
-                    playerList.remove(i);
+                    extra.remove(i);
                     break;
                 }
             }

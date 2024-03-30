@@ -32,22 +32,21 @@ public class SceneSwitcher {
 
     public static void game(Player player) {
         History.savePlayer(player);
-        Game.time=0;
-        Game.orangeTime=0;
-        Game.blueTime=0;
+        Game.time = 0;
+        Game.orangeTime = 0;
+        Game.blueTime = 0;
         Game.rand = false;
-        if (Game.root!=null){
+        if (Game.root != null) {
             Game.balls.clear();
-            Game.counterBrick=0;
-            Game.counter=0;
+            Game.counterBrick = 0;
+            Game.counter = 0;
+            Item.itemList.clear();
             Game.brickList.clear();
-            if (GameMenu.choice==1) {
+            if (GameMenu.choice == 1) {
                 new GameMenu().easy();
-            }
-           else  if (GameMenu.choice==2) {
+            } else if (GameMenu.choice == 2) {
                 new GameMenu().medium();
-            }
-            else {
+            } else {
                 new GameMenu().hard();
             }
             Game.root.getChildren().removeAll();

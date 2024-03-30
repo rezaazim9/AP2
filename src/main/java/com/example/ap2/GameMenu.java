@@ -3,6 +3,8 @@ package com.example.ap2;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -57,7 +59,7 @@ public class GameMenu  {
         Game.ball_color = Color.YELLOW;
     }
 
-    public void start() {
+    public void start() throws IOException {
         Player player=new Player(name.getText(),0,new Date().toString());
         SceneSwitcher.game(player);
     }

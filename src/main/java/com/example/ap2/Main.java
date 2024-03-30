@@ -1,16 +1,16 @@
 package com.example.ap2;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class Main extends Application {
     static Stage stage;
@@ -38,8 +38,22 @@ public class Main extends Application {
             mediaPlayer.play();
         });
     }
-
-    public static void main(String[] args) {
+    static ObjectMapper objectMapper = new ObjectMapper();
+    public static void main(String[] args) throws IOException {
+        try(
+                FileReader reader = new FileReader("C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\players.json");
+                BufferedReader bufferedReader = new BufferedReader(reader);
+        ) {
+            String currentLine;
+            while((currentLine=bufferedReader.readLine()) != null) {
+                  JsonNode logStorageNode =objectMapper.readTree(currentLine);
+                  String name=logStorageNode.toString().substring(logStorageNode.toString().indexOf("name")+7,logStorageNode.toString().indexOf(",")-1);
+                  String scoreString=logStorageNode.toString().substring(logStorageNode.toString().indexOf("score"));
+                  int score=Integer.parseInt(scoreString.substring(scoreString.indexOf("score")+7,scoreString.indexOf(",")));
+                  String date=logStorageNode.toString().substring(logStorageNode.toString().indexOf("date")+7,logStorageNode.toString().indexOf("2024")+4);
+                History.playerList.add(new Player(name,score,date));
+            }
+        }
         launch();
     }
 }

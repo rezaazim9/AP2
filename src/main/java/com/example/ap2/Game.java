@@ -15,6 +15,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -46,10 +47,11 @@ public class Game {
     static boolean speed;
     static double orangeTime=0;
     static double blueTime=0;
+    static boolean blue=false;
+    static boolean orange=false;
     static Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<>() {
         boolean ballsMoving = false;
-        boolean blue=false;
-        boolean orange=false;
+
 
 
         @Override
@@ -252,7 +254,10 @@ public class Game {
         mainMenu.setFont(new Font(18));
         mainMenu.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
+                orange=false;
+                blue=false;
                 player.setScore(score - (int) time);
+                Main.objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\players.json"), player);
                 SceneSwitcher.mainMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -265,7 +270,14 @@ public class Game {
         restart.setText("Restart");
         restart.setFont(new Font(18));
         restart.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
+            orange=false;
+            blue=false;
             player.setScore(score - (int) time);
+            try {
+                Main.objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\players.json"), player);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             SceneSwitcher.game(new Player(player.getName(), 0, new Date().toString()));
         });
         pause.setLayoutX(300);
@@ -302,7 +314,10 @@ public class Game {
         back.setFont(new Font(18));
         back.addEventFilter(MouseEvent.MOUSE_CLICKED, _ -> {
             try {
+                orange=false;
+                blue=false;
                 player.setScore(score - (int) time);
+                Main.objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\AP2\\src\\main\\resources\\com\\example\\ap2\\players.json"), player);
                 SceneSwitcher.gameMenu();
             } catch (IOException e) {
                 throw new RuntimeException(e);

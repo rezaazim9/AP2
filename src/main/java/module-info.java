@@ -11,6 +11,7 @@ module com.example.ap2 {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires javafx.media;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.ap2 to javafx.fxml;
     exports com.example.ap2;
